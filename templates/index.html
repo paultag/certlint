@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/uswds.min.css">
+        <title></title>
+    </head>
+    <body>
+        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        <main id="main-content" class="usa-grid">
+        <h1>Provided Certificates</h1>
+
+        <ul class="usa-accordion">
+{{ range $cert := .Certificates }}
+            <li>
+                <button class="usa-accordion-button" aria-expanded="true" aria-controls="serial-{{.SerialNumber}}">{{.Subject.CommonName}}</button>
+                <div id="serial-{{.SerialNumber}}" class="usa-accordion-content">
+                    <p>
+
+<pre>{{.PublicKey | toPEM "RSA PUBLIC KEY"}}</pre>
+
+  <table>
+    <thead></thead>
+    <tbody>
+        <tr><th scope="row">Public Key Algorithm</th><td>{{.PublicKeyAlgorithm}}</td></tr>
+
+      <tr><th scope="row">Not Before</th><td>{{.NotBefore}}</td></tr>
+      <tr><th scope="row">Not After</th><td>{{.NotAfter}}</td></tr>
+
+      <tr><th scope="row">Serial Number</th><td>{{.SerialNumber}}</td></tr>
+
+      <tr><th scope="row">Subject</th><td>{{.Subject}}</td></tr>
+      <tr><th scope="row">Issuer</th><td>{{.Issuer}}</td></tr>
+
+      <tr><th scope="row">Email Names</th><td>{{.EmailAddresses}}</td></tr>
+      <tr><th scope="row">DNS Names</th><td>{{.DNSNames}}</td></tr>
+      <tr><th scope="row">IP Addresses</th><td>{{.IPAddresses}}</td></tr>
+
+      <!-- <tr><th scope="row"></th><td></td></tr> -->
+    </tbody>
+  </table>
+                    </p>
+                </div>
+            </li>
+{{ end }}
+        </ul>
+
+            <script src="/static/js/uswds.min.js"></script>
+        </main>
+    </body>
+</html>
