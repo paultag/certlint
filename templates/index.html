@@ -17,9 +17,6 @@
                 <button class="usa-accordion-button" aria-expanded="true" aria-controls="serial-{{.SerialNumber}}">{{.Subject.CommonName}}</button>
                 <div id="serial-{{.SerialNumber}}" class="usa-accordion-content">
                     <p>
-
-<pre>{{.PublicKey | toPEM "PUBLIC KEY"}}</pre>
-
   <table>
     <thead></thead>
     <tbody>
@@ -36,18 +33,24 @@
       <tr><th scope="row">IP Addresses</th><td>{{.IPAddresses}}</td></tr>
 
       <tr><th scope="row">OSCPServers</th><td>
-{{ range $server := .OCSPServer }}<a href="{{.}}">{{.}}</a>{{ end }}
+{{ range $server := .OCSPServer }}<a href="{{.}}">{{.}}</a>
+{{ end }}
       </td></tr>
       <tr><th scope="row">Issuing Certificate URL</th><td>
-{{ range $server := .IssuingCertificateURL }}<a href="{{.}}">{{.}}</a>{{ end }}
+{{ range $server := .IssuingCertificateURL }}<a href="{{.}}">{{.}}</a>
+{{ end }}
       </td></tr>
       <tr><th scope="row">CRL Distribution Pointns</th><td>
-{{ range $server := .CRLDistributionPoints }}<a href="{{.}}">{{.}}</a>{{ end }}
+{{ range $server := .CRLDistributionPoints }}<a href="{{.}}">{{.}}</a>
+{{ end }}
       </td></tr>
 
       <!-- <tr><th scope="row"></th><td></td></tr> -->
     </tbody>
   </table>
+
+<pre>{{.PublicKey | toPEM "PUBLIC KEY"}}</pre>
+
                     </p>
                 </div>
             </li>
