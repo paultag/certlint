@@ -58,7 +58,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", LintServer)
 
-	tlsConfig := &tls.Config{ClientAuth: tls.RequireAnyClientCert}
+	tlsConfig := &tls.Config{ClientAuth: tls.RequestClientCert}
 	tlsConfig.BuildNameToCertificate()
 
 	server := &http.Server{
