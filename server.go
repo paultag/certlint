@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/pem"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -54,8 +55,14 @@ func LintServer(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	for _, path := range []string{
+		"static",
+		".well-known",
+	} {
+		fs := http.FileServer(http.Dir(path))
+		location := fmt.Sprintf("/%s/", path)
+		http.Handle(location, http.StripPrefix(location, fs))
+	}
 	http.HandleFunc("/", LintServer)
 
 	tlsConfig := &tls.Config{ClientAuth: tls.RequestClientCert}
